@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "个人资料" %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user me-2"></i>{% trans "个人资料" %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <img src="{{ user.profile_picture.url|default:'/static/images/default-profile.png' }}"
+                             class="profile-img mb-3" alt="{% trans '头像' %}">
+                        <h5>{{ user.username }}</h5>
+                        <p class="text-muted">
+                            {% if user.is_admin %}
+                                <span class="badge bg-success">{% trans "管理员" %}</span>
+                            {% else %}
+                                <span class="badge bg-info">{% trans "普通用户" %}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="col-md-8">
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">{% trans "用户名" %}</label>
+                                <input type="text" class="form-control" id="id_username"
+                                       value="{{ user.username }}" disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_email" class="form-label">{% trans "邮箱" %}</label>
+                                <input type="email" class="form-control" id="id_email"
+                                       value="{{ user.email }}" disabled>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_bio" class="form-label">{% trans "个人简介" %}</label>
+                                <textarea class="form-control" id="id_bio" rows="3"
+                                          name="bio" placeholder="{% trans '介绍一下你自己...' %}">{{ user.bio|default:'' }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="id_profile_picture" class="form-label">{% trans "头像" %}</label>
+                                <input class="form-control" type="file" id="id_profile_picture" name="profile_picture">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>{% trans "保存更改" %}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

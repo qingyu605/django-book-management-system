@@ -1,0 +1,61 @@
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .book-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .navbar-nav .btn {
+        margin-top: 0.5rem;
+        width: 100%;
+    }
+}
+
+/* 图书卡片动画 */
+.book-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 验证码区域 */
+.captcha-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.captcha-image {
+    border: 1px solid #dee2e6;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.captcha-image:hover {
+    opacity: 0.8;
+}
+
+/* 表单样式 */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+}
+
+/* 个人资料样式 */
+.profile-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #f8f9fa;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "注册" %}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="fas fa-user-plus me-2"></i>{% trans "用户注册" %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    <div class="alert alert-danger">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">
+                            <i class="fas fa-user me-1"></i>{% trans "用户名" %}
+                        </label>
+                        {{ form.username }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">
+                            <i class="fas fa-envelope me-1"></i>{% trans "邮箱" %}
+                        </label>
+                        {{ form.email }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">
+                            <i class="fas fa-lock me-1"></i>{% trans "密码" %}
+                        </label>
+                        {{ form.password1 }}
+                        <div class="form-text">{{ form.password1.help_text }}</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">
+                            <i class="fas fa-lock me-1"></i>{% trans "确认密码" %}
+                        </label>
+                        {{ form.password2 }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_captcha" class="form-label">
+                            <i class="fas fa-shield-alt me-1"></i>{% trans "验证码" %}
+                        </label>
+                        <div class="input-group">
+                            {{ form.captcha }}
+                            <img src="{% url 'users:captcha' %}?t={% now 'U' %}"
+                                 class="captcha-image"
+                                 alt="{% trans '验证码' %}"
+                                 title="{% trans '点击刷新验证码' %}"
+                                 onclick="this.src='{% url 'captcha' %}?t='+Date.now()">
+                        </div>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-user-plus me-2"></i>{% trans "注册" %}
+                        </button>
+                    </div>
+                </form>
+
+                <hr class="my-4">
+
+                <p class="text-center text-muted">
+                    {% trans "已有账号?" %}
+                    <a href="{% url 'users:login' %}" class="text-decoration-none">
+                        {% trans "立即登录" %}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// 验证码刷新功能
+document.querySelector('.captcha-image').addEventListener('click', function() {
+    this.src = "{% url 'users:captcha' %}?t=" + Date.now();
+});
+</script>
+{% endblock %}
